@@ -1,0 +1,4 @@
+name: PlayerDataAPI
+version: "0.1"
+author: Freack100
+main: me.freack100.playerdataapi.PlayerDataAPI
