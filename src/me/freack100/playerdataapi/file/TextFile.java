@@ -15,9 +15,9 @@ public class TextFile {
 
     private File file;
 
-    public TextFile(File file){
+    public TextFile(File file) {
         this.file = file;
-        if(!file.exists()) try {
+        if (!file.exists()) try {
             file.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
@@ -26,22 +26,22 @@ public class TextFile {
 
     public void writeContent(String content) throws IOException {
         Writer output = new BufferedWriter(new FileWriter(file));
-        try{
+        try {
             output.write(content);
             //output.flush();
-        }finally {
+        } finally {
             output.close();
         }
     }
 
-    public String readContent(){
+    public String readContent() {
         StringBuilder contents = new StringBuilder();
 
-        try{
+        try {
             BufferedReader input = new BufferedReader(new FileReader(file));
-            try{
+            try {
                 String line = null;
-                while((line = input.readLine()) != null){
+                while ((line = input.readLine()) != null) {
                     contents.append(line);
                     contents.append(System.getProperty("line.separator"));
                 }
@@ -54,10 +54,18 @@ public class TextFile {
         return contents.toString();
     }
 
-    public void appendContent(String content){
+    public void appendContent(String content) {
         String cont = readContent();
         try {
-            writeContent(cont+content);
+            writeContent(cont + content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void clear() {
+        try {
+            writeContent("");
         } catch (IOException e) {
             e.printStackTrace();
         }

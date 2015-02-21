@@ -13,31 +13,27 @@ import java.util.HashMap;
 
 public class PlayerData {
 
-    private HashMap<String,String> data;
+    private HashMap<String, String> data;
 
-    public PlayerData(){
+    public PlayerData() {
         this.data = new HashMap();
     }
 
-    public String get(String key){
-        if(data.containsKey(key)) return data.get(key);
+    public String get(String key) {
+        if (data.containsKey(key)) return data.get(key);
         return null;
     }
 
-    public void addData(String key, String value){
-        data.put(key,value);
-    }
-
-    public void updateData(String key, String value) {
+    public void addData(String key, String value) {
         if (data.containsKey(key)) {
             data.remove(key);
-            addData(key,value);
-        }else{
-            addData(key,value);
+            data.put(key, value);
+        } else {
+            data.put(key, value);
         }
     }
 
-    public HashMap<String,String> getAllData(){
+    public HashMap<String, String> getAllData() {
         return data;
     }
 

@@ -20,12 +20,12 @@ import java.util.*;
 
 public class InventoryBuilder {
 
-    //TODO: Add functionality to this.
+
 
     private PlayerDataAPI api;
 
-    private ItemStack getItemForData(String key,String data){
-        ItemStack item = new ItemStack(Material.APPLE,1);
+    private ItemStack getItemForData(String key, String data) {
+        ItemStack item = new ItemStack(Material.APPLE, 1);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(key);
         meta.setLore(Arrays.asList(data));
@@ -37,16 +37,16 @@ public class InventoryBuilder {
         this.api = api;
     }
 
-    public Inventory buildInventory(UUID uuid, int page){
-        Inventory inv = Bukkit.createInventory(null,6*9,"Data");
-        int dataPerPage = (5*9);
+    public Inventory buildInventory(UUID uuid, int page) {
+        Inventory inv = Bukkit.createInventory(null, 6 * 9, "Data");
+        int dataPerPage = (5 * 9);
 
         int currentPos = 0;
 
-        for(Map.Entry<String,String> entry : api.getData(uuid).getAllData().entrySet()){
-            inv.setItem(currentPos,getItemForData(entry.getKey(),entry.getValue()));
+        for (Map.Entry<String, String> entry : api.getData(uuid).getAllData().entrySet()) {
+            inv.setItem(currentPos, getItemForData(entry.getKey(), entry.getValue()));
             currentPos++;
-            if(currentPos>=dataPerPage) break;
+            if (currentPos >= dataPerPage) break;
         }
         return inv;
     }

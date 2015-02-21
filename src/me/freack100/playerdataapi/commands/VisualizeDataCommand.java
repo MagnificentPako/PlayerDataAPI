@@ -10,10 +10,10 @@
 package me.freack100.playerdataapi.commands;
 
 import me.freack100.playerdataapi.PlayerDataAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 
 public class VisualizeDataCommand implements CommandExecutor {
 
@@ -26,20 +26,36 @@ public class VisualizeDataCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender commandSender, Command cmd, String s, String[] args) {
 
-        if(!(commandSender instanceof Player)) return true;
+        if (!(commandSender instanceof Player)) return true;
 
         Player player = (Player) commandSender;
 
         //Get data of the player using the command
-        if(args.length == 0){
-            Inventory inv = api.inventoryBuilder.buildInventory(player.getUniqueId(),0);
+        if (args.length == 0) {
+            Inventory inv = api.inventoryBuilder.buildInventory(player.getUniqueId(), 0);
             player.openInventory(inv);
+            return true;
         }
         //Get data of specified player/the console
-        else{
-            //TODO: Implement this
+        else {
+            //Get Information about the console
+            if(args[0].equalsIgnoreCase("console")){
+                Inventory inv = api.inventoryBuilder.buildInventory(api.getConsoleUUID(),0);
+                player.openInventory(inv);
+                return true;
+            }
+            //Information about player
+            else{
+                Player target = Bukkit.getPlayer(args[0]);
+                if(target != null){
+                    Inventory inv = api.inventoryBuilder.buildInventory(target.getUniqueId(),0);
+                    player.openInventory(inv);
+                    return true;
+                }else{
+                    player.sendMessage("Player not found.");
+                    return true;
+                }
+            }
         }
-
-        return false;
     }
 }

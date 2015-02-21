@@ -27,7 +27,7 @@ public class BlocksPlacedCollector extends Collector {
     @EventHandler
     public void on(BlockPlaceEvent e) {
         UUID uuid = e.getPlayer().getUniqueId();
-        int data = Integer.parseInt(api.getData(uuid).get("blocksPlaced"));
-        api.getData(uuid).updateData("blocksPlaced", String.valueOf(data + 1));
+        int data = api.getData(uuid).get("blocksPlaced") != null ? Integer.parseInt(api.getData(uuid).get("blocksPlaced")) : 0;
+        api.getData(uuid).addData("blocksPlaced", String.valueOf(data + 1));
     }
 }

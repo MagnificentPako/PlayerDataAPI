@@ -12,23 +12,19 @@ package me.freack100.playerdataapi.collector.collectors;
 import me.freack100.playerdataapi.PlayerDataAPI;
 import me.freack100.playerdataapi.collector.Collector;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
-import java.util.UUID;
-
-public class BlocksBrokenCollector extends Collector {
+public class LastCommandCollector extends Collector {
 
     private PlayerDataAPI api;
 
-    public BlocksBrokenCollector(PlayerDataAPI api) {
+    public LastCommandCollector(PlayerDataAPI api) {
         this.api = api;
     }
 
     @EventHandler
-    public void on(BlockBreakEvent e) {
-        UUID uuid = e.getPlayer().getUniqueId();
-        int data = api.getData(uuid).get("blocksBroken") != null ? Integer.parseInt(api.getData(uuid).get("blocksBroken")) : 0;
-        api.getData(uuid).addData("blocksBroken", String.valueOf(data + 1));
+    public void on(PlayerCommandPreprocessEvent e){
+        api.getData(e.getPlayer().getUniqueId()).addData("lastCommand",e.getMessage());
     }
-
 }
